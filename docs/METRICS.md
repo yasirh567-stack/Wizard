@@ -1,4 +1,4 @@
-# Steward — Metrics
+# Wizard — Metrics
 
 **Owner:** Yasir Hassan
 **Status:** v1
@@ -20,7 +20,7 @@ Why this framing specifically:
   comparison; 90 days smooths seasonal one-offs (a birthday month, a holiday
   month) without needing a full year of history a new account won't have.
 - **Discretionary, not total, spending.** Total spending falling because
-  rent went up elsewhere isn't a Steward outcome. The metric has to isolate
+  rent went up elsewhere isn't a Wizard outcome. The metric has to isolate
   the category the product actually has a causal path to affecting.
 - **10% threshold, not "any reduction."** A 1% reduction is within normal
   week-to-week noise for most spending categories; 10% is large enough to

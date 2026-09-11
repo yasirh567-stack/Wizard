@@ -1,4 +1,4 @@
-# Steward — Product Backlog
+# Wizard — Product Backlog
 
 **Last updated:** 2026-09-11
 **Priority key:** P0 = MVP, blocks the core loop · P1 = MVP, valuable but not
@@ -10,24 +10,24 @@ is written now for traceability, not because it's about to be built.
 
 ## Epic 1 — Auth & Account Connection
 
-**STW-1** (P0) — As a user, I can create an account with email/password and
+**WIZ-1** (P0) — As a user, I can create an account with email/password and
 log in, so my financial data sits behind real authentication.
 - Acceptance: passwords hashed (argon2), JWT issued on login, protected
   routes reject a missing or invalid token with 401.
 
-**STW-2** (P0) — As a user, I can connect a bank account through Plaid
+**WIZ-2** (P0) — As a user, I can connect a bank account through Plaid
 Sandbox, so transactions populate without manual entry.
 - Acceptance: Plaid Link completes against a sandbox institution; the access
   token is stored encrypted, never logged or returned by any API response;
   an initial sync runs immediately after connect.
 
-**STW-3** (P1) — As a user without Plaid sandbox credentials set up, I can
+**WIZ-3** (P1) — As a user without Plaid sandbox credentials set up, I can
 still explore the product against a bundled synthetic dataset, so
 evaluating this doesn't require external setup.
 - Acceptance: a "load demo data" action seeds 12+ months of synthetic
   transaction history across multiple accounts, with zero external calls.
 
-**STW-4** (P1) — As a user, I can upload a CSV of transactions, so an
+**WIZ-4** (P1) — As a user, I can upload a CSV of transactions, so an
 account Plaid doesn't cover still works.
 - Acceptance: a documented column format imports correctly; malformed rows
   are reported individually, not silently dropped and not fatal to the rest
@@ -35,76 +35,76 @@ account Plaid doesn't cover still works.
 
 ## Epic 2 — Transaction Sync Correctness
 
-**STW-5** (P0) — As a user, re-syncing doesn't duplicate transactions I've
+**WIZ-5** (P0) — As a user, re-syncing doesn't duplicate transactions I've
 already imported.
 - Acceptance: dedup key is the Plaid transaction ID (Plaid path) or a
   content hash of date+amount+merchant+account (CSV path); re-running a
   sync against unchanged data is a no-op.
 
-**STW-6** (P0) — As a user, a pending transaction updates in place once it
+**WIZ-6** (P0) — As a user, a pending transaction updates in place once it
 posts, instead of appearing twice.
 - Acceptance: Plaid's pending→posted linkage updates the existing row;
   never a second insert.
 
 ## Epic 3 — Categorization (Phase 2)
 
-**STW-7** (P0) — Every transaction gets a category automatically; I never
+**WIZ-7** (P0) — Every transaction gets a category automatically; I never
 start from an uncategorized list.
 
-**STW-8** (P0) — I can see the system's confidence in a category and
+**WIZ-8** (P0) — I can see the system's confidence in a category and
 correct it when it's wrong.
 - Acceptance: low-confidence categorizations are visually distinguishable
   from high-confidence ones; a correction is a single action, applied
   immediately.
 
-**STW-9** (P1) — A correction I make improves categorization of similar
+**WIZ-9** (P1) — A correction I make improves categorization of similar
 future transactions from the same merchant.
 
 ## Epic 4 — Recurring & Anomaly Detection (Phase 2)
 
-**STW-10** (P0) — Recurring charges are detected and surfaced without me
+**WIZ-10** (P0) — Recurring charges are detected and surfaced without me
 asking — including ones that don't repeat on an exact 30-day interval.
 
-**STW-11** (P0) — Anomalous transactions are flagged with the specific
+**WIZ-11** (P0) — Anomalous transactions are flagged with the specific
 reason they were flagged (unusual amount for this merchant, unusual
 merchant entirely, duplicate-looking charge), not just "anomaly."
 
 ## Epic 5 — Forecasting (Phase 3)
 
-**STW-12** (P0) — I can see a projected cash-flow forecast, not only
+**WIZ-12** (P0) — I can see a projected cash-flow forecast, not only
 historical totals.
 
-**STW-13** (P1) — The forecast shows a range, not a single number precise
+**WIZ-13** (P1) — The forecast shows a range, not a single number precise
 enough to imply false confidence.
 
 ## Epic 6 — Recommendations & Simulator (Phase 3)
 
-**STW-14** (P0) — I can state a savings goal and deadline and get 2–3
+**WIZ-14** (P0) — I can state a savings goal and deadline and get 2–3
 ranked, explained plans to hit it.
 
-**STW-15** (P0) — Every recommendation cites the specific transaction(s) or
+**WIZ-15** (P0) — Every recommendation cites the specific transaction(s) or
 pattern behind it — no generic advice with nothing underneath it.
 
-**STW-16** (P1) — I can accept part of a plan (not all-or-nothing) and see
+**WIZ-16** (P1) — I can accept part of a plan (not all-or-nothing) and see
 the projection update accordingly.
 
 ## Epic 7 — Natural-Language Layer (Phase 4)
 
-**STW-17** (P0) — I can ask a plain-language question ("what should I
+**WIZ-17** (P0) — I can ask a plain-language question ("what should I
 change to save $10k this year") and get an answer computed by the real
 forecasting/recommendation code, not one the model invented.
 - Acceptance: numeric claims in a chat answer are traceable to an actual
   tool call result, not free-generated by the LLM.
 
-**STW-18** (P1) — Chat responses stream token-by-token rather than
+**WIZ-18** (P1) — Chat responses stream token-by-token rather than
 appearing as a single block after a wait.
 
 ## Epic 8 — Dashboard (Phase 5)
 
-**STW-19** (P0) — The landing dashboard shows accounts, recent categorized
+**WIZ-19** (P0) — The landing dashboard shows accounts, recent categorized
 activity, recurring/anomaly call-outs, and the forecast at a glance.
 
-**STW-20** (P1) — The scenario simulator has a dedicated view for comparing
+**WIZ-20** (P1) — The scenario simulator has a dedicated view for comparing
 plans side by side, not just a list.
 
 ## Deferred (P2 — see ROADMAP.md)

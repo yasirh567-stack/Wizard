@@ -1,4 +1,4 @@
-# Steward — Problem
+# Wizard — Problem
 
 **Owner:** Yasir Hassan
 **Status:** v1
@@ -33,7 +33,7 @@ actual question. Answering it for real requires:
 
 No mainstream app does all five. Most do (1) shallowly and stop there. The
 gap between *reporting* and *a specific, explained, achievable plan* is what
-Steward is built to close.
+Wizard is built to close.
 
 ## Why this is hard, not just unbuilt
 
@@ -51,7 +51,7 @@ that says "do this," instead of five dashboards that say "here's data."
 
 A finance app is also a product, and most portfolio "case studies" for a
 product are a PDF someone wrote after the fact, disconnected from anything
-the software actually did. Steward's second half — the PM Agent — is an
+the software actually did. Wizard's second half — the PM Agent — is an
 attempt to make the case study real: it reads the Copilot's own usage
 telemetry, synthetic support tickets, and experiment results, and produces
 the research → prioritization → PRD → architecture proposal → experiment →

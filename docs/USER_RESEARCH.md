@@ -1,4 +1,4 @@
-# Steward — User Research
+# Wizard — User Research
 
 **Owner:** Yasir Hassan
 **Status:** v1
@@ -38,7 +38,7 @@ primary — see `PRD.md`'s risk section.
 complaint about envelope/category-budgeting tools (YNAB being the most
 cited) is the maintenance burden: categories need constant re-adjustment,
 and a single overspent category makes the whole budget feel "broken" for the
-rest of the month. This argues against Steward leading with manual category
+rest of the month. This argues against Wizard leading with manual category
 limits as the primary interaction.
 
 **2. Subscription creep is the single most-mentioned "gotcha."** Recurring
@@ -56,7 +56,7 @@ agency.
 **4. Retrospective apps get used once, prescriptive moments get used
 repeatedly.** Feature requests across these communities skew toward "tell me
 what to change," not "show me another chart." This is the strongest single
-argument for Steward's core bet: recommendations, not just dashboards.
+argument for Wizard's core bet: recommendations, not just dashboards.
 
 **5. Trust in a recommendation depends on visible reasoning.** Generic
 advice ("spend less on dining") gets dismissed; specific, sourced claims
@@ -72,7 +72,7 @@ category-accuracy. This is the basis for the Irregular Earner persona.
 ## What this research does not tell us
 
 Desk research can surface *what people complain about*; it can't validate
-*whether Steward's specific recommendations actually change behavior*. That
+*whether Wizard's specific recommendations actually change behavior*. That
 question is answered later, empirically, once the PM Agent's experimentation
 framework exists (`docs/METRICS.md`, Phase 7 in `ROADMAP.md`) — synthetic
 user-behavior simulation stands in for a real population, and is disclosed

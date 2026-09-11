@@ -1,4 +1,4 @@
-# Steward — Personas
+# Wizard — Personas
 
 **Owner:** Yasir Hassan
 **Status:** v1
@@ -30,7 +30,7 @@ look alarming. The sum does.
 weight as "Groceries: $410/month" — nothing marks the $187 as unusually
 *fixable* compared to the $410.
 
-**What they need from Steward:** automatic recurring-charge detection that
+**What they need from Wizard:** automatic recurring-charge detection that
 surfaces the full list unprompted, sorted by "you could cancel this with one
 click and probably wouldn't notice" rather than by dollar amount.
 
@@ -52,7 +52,7 @@ month" — asks "if I take this trip, can I still make rent in five weeks."
 a calendar the user's income doesn't follow, so "on track" and "over budget"
 signals are frequently wrong in both directions.
 
-**What they need from Steward:** cash-flow-forward forecasting keyed to
+**What they need from Wizard:** cash-flow-forward forecasting keyed to
 actual account balance trajectory, not a monthly category allowance — the
 forecast is the primary view, categories are secondary.
 
@@ -75,7 +75,7 @@ apps are a progress bar toward a savings *total* — they don't reverse-
 engineer the goal into "cut X, keep Y, and you'll hit it by the deadline,"
 and they don't show what happens if the user only does half of it.
 
-**What they need from Steward:** the scenario simulator and recommendation
+**What they need from Wizard:** the scenario simulator and recommendation
 engine — enter a goal and deadline, get 2–3 ranked, explained plans, each
 showing the specific spending changes required and the trade-off of doing
 less than the full plan.

@@ -1,4 +1,4 @@
-# Steward — Roadmap
+# Wizard — Roadmap
 
 **Last updated:** 2026-09-11
 

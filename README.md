@@ -1,4 +1,4 @@
-# Steward
+# Wizard
 
 An AI-powered personal finance copilot, plus the AI Product Manager agent
 that runs product management *on it* — using the app's own telemetry,

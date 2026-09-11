@@ -1,4 +1,4 @@
-# Steward — Architecture
+# Wizard — Architecture
 
 **Owner:** Yasir Hassan
 **Status:** v1 draft — will be revised once Phase 1 locks the actual API
@@ -96,7 +96,7 @@ Actions for CI, AWS for deploy.
 
 - **Why Postgres over SQLite (Marginalia's choice)?** Marginalia is
   single-process, local-first, and its persistence need (an incremental-
-  indexing manifest) fits SQLite well. Steward has concurrent Celery
+  indexing manifest) fits SQLite well. Wizard has concurrent Celery
   workers writing derived data and relational integrity requirements across
   accounts/transactions/budgets/recommendations that call for a real RDBMS —
   and it's a stack gap none of the other three repos currently cover.

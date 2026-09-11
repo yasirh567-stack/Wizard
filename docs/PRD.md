@@ -1,4 +1,4 @@
-# Steward (Finance Copilot) — Product Requirements Document
+# Wizard (Finance Copilot) — Product Requirements Document
 
 **Owner:** Yasir Hassan
 **Status:** v1 (MVP) approved for build
@@ -44,7 +44,7 @@ not a household/shared-account product; see Non-goals.
   handling real account credentials brings compliance obligations
   (data security, regulatory) that are out of scope for what this is.
   See `ARCHITECTURE.md`.
-- **Autonomous execution.** Steward recommends; it never cancels a
+- **Autonomous execution.** Wizard recommends; it never cancels a
   subscription, moves money, or contacts a merchant on its own. A
   recommendation engine that can act without the user is a trust and safety
   problem this project isn't taking on. This is a permanent constraint, not
