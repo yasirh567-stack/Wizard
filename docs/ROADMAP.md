@@ -9,16 +9,14 @@ should try to ship simultaneously. This roadmap sequences it instead, the
 same way Momentum's roadmap sequenced its four procrastination mechanisms
 rather than building all of them shallowly at once.
 
-## Phase 0 — Planning
+## Phase 0 — Planning (done)
 
-- **0a (this commit):** problem statement, research, personas, PRD, metrics,
-  architecture.
-- **0b (next):** backlog, risk register, and a sprint-1 scope cut — the
-  detailed "what actually gets built first, in what order, inside Phase 1"
-  breakdown, same role `SPRINT_1.md` played for Momentum.
+- **0a:** problem statement, research, personas, PRD, metrics, architecture.
+- **0b:** backlog, risk register, and `SPRINT_1.md` — the detailed "what
+  actually gets built first, in what order, inside Phase 1" breakdown, same
+  role it played for Momentum.
 
-**Exit criteria:** every doc above exists and cross-references correctly;
-nothing in Phase 1 starts until 0b is done.
+Eight docs, no app code. Phase 1 (backend skeleton) is next.
 
 ## Phase 1 — Backend skeleton
 
