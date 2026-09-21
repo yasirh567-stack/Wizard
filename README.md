@@ -9,9 +9,10 @@ Working name — open to renaming once there's a build to name.
 
 ## Status
 
-Planning. See `docs/` for the product case study (problem, research,
-personas, requirements, architecture, roadmap) written before any app code —
-same discipline as this author's other projects. Nothing runs yet.
+Phase 1 (backend skeleton) in progress — see `docs/SPRINT_1.md`. Planning
+docs in `docs/` (problem, research, personas, requirements, architecture,
+roadmap) were written before any app code, same discipline as this author's
+other projects. See `backend/README.md` to run it.
 
 ## Docs
 
