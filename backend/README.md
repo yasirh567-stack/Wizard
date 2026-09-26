@@ -21,6 +21,18 @@ That's the whole local setup — API on `:8000`, Postgres on `:5432`, Redis on
   `POST /plaid/sync/{item_id}` — Plaid Sandbox connect flow. Needs
   `PLAID_CLIENT_ID`/`PLAID_SECRET` in `.env` (free at
   https://dashboard.plaid.com); everything else works without them.
+- `POST /demo/load` — seeds 13 months of synthetic transaction history
+  across 3 accounts (checking, savings, credit card) for the current user,
+  zero external calls. Safe to call again — it replaces the previous demo
+  set rather than piling on top of it.
+- `POST /transactions/csv-upload` — multipart upload: `file` (the CSV) plus
+  either `account_id` (append to an existing account) or `account_name`
+  (creates a new one). Column format: `date,amount,name,merchant_name,category`
+  — `merchant_name`/`category` optional, `date` as `YYYY-MM-DD` or
+  `MM/DD/YYYY`, `amount` positive for money out / negative for money in
+  (Plaid's convention). Malformed rows are reported individually
+  (`{"row": N, "reason": "..."}`) and skipped, never fatal to the rest of
+  the file; re-uploading the same rows is a no-op (deduped by content hash).
 
 ## Tests
 

@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 
-from app.api.routes import accounts, auth, plaid, transactions
+from app.api.routes import accounts, auth, demo, plaid, transactions
 
 app = FastAPI(title="Wizard API")
 
@@ -8,6 +8,7 @@ app.include_router(auth.router)
 app.include_router(accounts.router)
 app.include_router(transactions.router)
 app.include_router(plaid.router)
+app.include_router(demo.router)
 
 
 @app.get("/health")
