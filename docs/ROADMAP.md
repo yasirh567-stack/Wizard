@@ -35,10 +35,10 @@ machine's Docker/Colima build, not a known defect in the compose file itself
 
 ## Phase 2 — Categorization, recurring detection, anomaly detection
 
-Rule-seeded categorization classifier with a confidence score and manual
-override, recurring-subscription detector (handles irregular intervals, not
-just exact-30-day repeats), spending anomaly detector. Run as Celery jobs
-against Redis.
+See `SPRINT_2.md` for the detailed build order. Rule-seeded categorization
+classifier with a confidence score and manual override, recurring-
+subscription detector (handles irregular intervals, not just exact-30-day
+repeats), spending anomaly detector. Run as Celery jobs against Redis.
 
 **Exit criteria:** categorization precision/recall measured against a
 held-out labeled set (not eyeballed); recurring detection validated against
