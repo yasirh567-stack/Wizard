@@ -18,17 +18,20 @@ rather than building all of them shallowly at once.
 
 Eight docs, no app code. Phase 1 (backend skeleton) is next.
 
-## Phase 1 — Backend skeleton
+## Phase 1 — Backend skeleton (done, with one open item)
 
-FastAPI project structure, PostgreSQL schema (users, accounts, transactions,
-categories, budgets, recommendations, events), JWT auth, Docker Compose
-(API + Postgres + Redis), Plaid Sandbox connection + sync, a CSV-upload
-fallback path, and a synthetic seed-data generator for demoing without
-setting up Plaid credentials.
+FastAPI project structure, PostgreSQL schema (users, accounts, transactions),
+JWT auth, Docker Compose (API + Postgres + Redis), Plaid Sandbox connection +
+sync (with dedup and pending→posted handling built in, not retrofitted), a
+CSV-upload fallback path, and a synthetic seed-data generator for demoing
+without setting up Plaid credentials. See `PHASE_1_RETRO.md`.
 
 **Exit criteria:** a connected (sandbox) account's transactions land in
-Postgres, unauthenticated requests are rejected, `docker compose up` is the
-entire local setup.
+Postgres — met via a fake-client test, not a real sandbox call (retro item);
+unauthenticated requests are rejected — met; `docker compose up` is the
+entire local setup — **not verified end-to-end**, blocked on this dev
+machine's Docker/Colima build, not a known defect in the compose file itself
+(see retro). Carried into Phase 2 as a to-do, not re-opened as Phase 1 scope.
 
 ## Phase 2 — Categorization, recurring detection, anomaly detection
 

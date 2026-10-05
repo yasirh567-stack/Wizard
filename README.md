@@ -9,10 +9,12 @@ Working name — open to renaming once there's a build to name.
 
 ## Status
 
-Phase 1 (backend skeleton) in progress — see `docs/SPRINT_1.md`. Planning
-docs in `docs/` (problem, research, personas, requirements, architecture,
-roadmap) were written before any app code, same discipline as this author's
-other projects. See `backend/README.md` to run it.
+Phase 1 (backend skeleton) done — see `docs/PHASE_1_RETRO.md` for what
+shipped and what's still open (`docker compose up` is written but not yet
+verified end-to-end on the dev machine used so far). Planning docs in
+`docs/` (problem, research, personas, requirements, architecture, roadmap)
+were written before any app code, same discipline as this author's other
+projects. See `backend/README.md` to run it.
 
 ## Docs
 
@@ -23,6 +25,7 @@ other projects. See `backend/README.md` to run it.
 - [`docs/METRICS.md`](docs/METRICS.md) — north star, guardrails, experiment metrics
 - [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) — system design
 - [`docs/ROADMAP.md`](docs/ROADMAP.md) — phase-by-phase build plan
+- [`docs/PHASE_1_RETRO.md`](docs/PHASE_1_RETRO.md) — Phase 1 retro
 
 ## License
 
