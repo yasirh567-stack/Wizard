@@ -23,6 +23,7 @@ from sqlalchemy.orm import Session
 
 from app.models.account import Account
 from app.models.transaction import Transaction
+from app.services.categorization import categorize_transaction
 from app.services.content_hash import compute_content_hash
 
 REQUIRED_COLUMNS = {"date", "amount", "name"}
@@ -103,18 +104,18 @@ def import_csv(db: Session, account: Account, csv_text: str) -> ImportResult:
         content_hash = compute_content_hash(account.id, txn_date, amount, merchant_name)
         existing = db.scalar(select(Transaction).where(Transaction.content_hash == content_hash))
         if existing is None:
-            db.add(
-                Transaction(
-                    account_id=account.id,
-                    content_hash=content_hash,
-                    date=txn_date,
-                    amount=amount,
-                    merchant_name=merchant_name,
-                    name=name,
-                    category=category,
-                    pending=False,
-                )
+            transaction = Transaction(
+                account_id=account.id,
+                content_hash=content_hash,
+                date=txn_date,
+                amount=amount,
+                merchant_name=merchant_name,
+                name=name,
+                category=category,
+                pending=False,
             )
+            categorize_transaction(db, transaction, account.user_id)
+            db.add(transaction)
         result.imported += 1
 
     return result

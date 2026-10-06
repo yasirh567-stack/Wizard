@@ -25,7 +25,7 @@ def upgrade() -> None:
         sa.Column("id", GUID(), primary_key=True),
         sa.Column("email", sa.String(length=255), nullable=False),
         sa.Column("hashed_password", sa.String(length=255), nullable=False),
-        sa.Column("created_at", sa.DateTime(timezone=True), server_default=sa.text("now()")),
+        sa.Column("created_at", sa.DateTime(timezone=True), server_default=sa.func.now()),
     )
     op.create_index("ix_users_email", "users", ["email"], unique=True)
 
@@ -39,7 +39,7 @@ def upgrade() -> None:
         sa.Column("access_token_encrypted", sa.String(length=512), nullable=False),
         sa.Column("institution_id", sa.String(length=255), nullable=True),
         sa.Column("cursor", sa.String(length=512), nullable=True),
-        sa.Column("created_at", sa.DateTime(timezone=True), server_default=sa.text("now()")),
+        sa.Column("created_at", sa.DateTime(timezone=True), server_default=sa.func.now()),
     )
     op.create_index("ix_plaid_items_user_id", "plaid_items", ["user_id"])
     op.create_index("ix_plaid_items_plaid_item_id", "plaid_items", ["plaid_item_id"], unique=True)
@@ -63,7 +63,7 @@ def upgrade() -> None:
         sa.Column("type", sa.String(length=50), nullable=True),
         sa.Column("subtype", sa.String(length=50), nullable=True),
         sa.Column("mask", sa.String(length=10), nullable=True),
-        sa.Column("created_at", sa.DateTime(timezone=True), server_default=sa.text("now()")),
+        sa.Column("created_at", sa.DateTime(timezone=True), server_default=sa.func.now()),
     )
     op.create_index("ix_accounts_user_id", "accounts", ["user_id"])
     op.create_index("ix_accounts_plaid_item_id", "accounts", ["plaid_item_id"])
@@ -86,8 +86,8 @@ def upgrade() -> None:
         sa.Column("name", sa.String(length=255), nullable=False),
         sa.Column("category", sa.String(length=100), nullable=True),
         sa.Column("pending", sa.Boolean(), nullable=False),
-        sa.Column("created_at", sa.DateTime(timezone=True), server_default=sa.text("now()")),
-        sa.Column("updated_at", sa.DateTime(timezone=True), server_default=sa.text("now()")),
+        sa.Column("created_at", sa.DateTime(timezone=True), server_default=sa.func.now()),
+        sa.Column("updated_at", sa.DateTime(timezone=True), server_default=sa.func.now()),
     )
     op.create_index("ix_transactions_account_id", "transactions", ["account_id"])
     op.create_index(

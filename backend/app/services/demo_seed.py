@@ -3,6 +3,7 @@ zero external calls (no Plaid sandbox credentials needed).
 """
 
 import random
+import uuid
 from datetime import date, timedelta
 from decimal import Decimal
 
@@ -12,6 +13,7 @@ from sqlalchemy.orm import Session
 from app.models.account import Account
 from app.models.transaction import Transaction
 from app.models.user import User
+from app.services.categorization import categorize_transaction
 from app.services.content_hash import compute_content_hash
 
 MONTHS_OF_HISTORY = 13
@@ -59,20 +61,21 @@ def _add_transaction(
     merchant_name: str | None,
     name: str,
     category: str | None,
+    user_id: uuid.UUID,
 ) -> None:
     content_hash = compute_content_hash(account.id, txn_date, amount, merchant_name)
-    db.add(
-        Transaction(
-            account_id=account.id,
-            content_hash=content_hash,
-            date=txn_date,
-            amount=amount,
-            merchant_name=merchant_name,
-            name=name,
-            category=category,
-            pending=False,
-        )
+    transaction = Transaction(
+        account_id=account.id,
+        content_hash=content_hash,
+        date=txn_date,
+        amount=amount,
+        merchant_name=merchant_name,
+        name=name,
+        category=category,
+        pending=False,
     )
+    categorize_transaction(db, transaction, user_id)
+    db.add(transaction)
 
 
 def generate_demo_data(db: Session, user: User) -> dict[str, int]:
@@ -125,7 +128,8 @@ def generate_demo_data(db: Session, user: User) -> dict[str, int]:
     payday = start
     while payday <= today:
         _add_transaction(
-            db, checking, payday, Decimal("-2100.00"), "Employer Inc", "Payroll Deposit", "Income"
+            db, checking, payday, Decimal("-2100.00"), "Employer Inc", "Payroll Deposit", "Income",
+            user.id,
         )
         transactions_created += 1
         payday += timedelta(days=14)
@@ -134,20 +138,20 @@ def generate_demo_data(db: Session, user: User) -> dict[str, int]:
         for merchant, name, category, amount, day in _RECURRING_CHECKING_BILLS:
             txn_date = _day_in_month(month_start, day)
             if txn_date and start <= txn_date <= today:
-                _add_transaction(db, checking, txn_date, amount, merchant, name, category)
+                _add_transaction(db, checking, txn_date, amount, merchant, name, category, user.id)
                 transactions_created += 1
 
         for merchant, name, category, amount, day in _RECURRING_CARD_SUBSCRIPTIONS:
             txn_date = _day_in_month(month_start, day)
             if txn_date and start <= txn_date <= today:
-                _add_transaction(db, credit_card, txn_date, amount, merchant, name, category)
+                _add_transaction(db, credit_card, txn_date, amount, merchant, name, category, user.id)
                 transactions_created += 1
 
         transfer_date = _day_in_month(month_start, 20)
         if transfer_date and start <= transfer_date <= today:
             _add_transaction(
                 db, savings, transfer_date, Decimal("-200.00"), "Internal Transfer",
-                "Transfer from Checking", "Transfer",
+                "Transfer from Checking", "Transfer", user.id,
             )
             transactions_created += 1
 
@@ -159,7 +163,9 @@ def generate_demo_data(db: Session, user: User) -> dict[str, int]:
             merchants, (low, high) = _DISCRETIONARY_CATEGORIES[category]
             merchant = rng.choice(merchants)
             amount = Decimal(str(round(rng.uniform(low, high), 2)))
-            _add_transaction(db, credit_card, current, amount, merchant, f"{merchant} purchase", category)
+            _add_transaction(
+                db, credit_card, current, amount, merchant, f"{merchant} purchase", category, user.id
+            )
             transactions_created += 1
         current += timedelta(days=1)
 

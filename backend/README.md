@@ -33,6 +33,14 @@ That's the whole local setup — API on `:8000`, Postgres on `:5432`, Redis on
   (Plaid's convention). Malformed rows are reported individually
   (`{"row": N, "reason": "..."}`) and skipped, never fatal to the rest of
   the file; re-uploading the same rows is a no-op (deduped by content hash).
+- `GET /categories` — the fixed taxonomy (seeded by migration
+  `d7fab9590e69`). Every transaction from any ingestion path is
+  categorized against this automatically on insert (WIZ-7); unmatched
+  merchants land on "Uncategorized", never a null category.
+- `PATCH /transactions/{id}/category` — `{"category_id": "..."}`. A single
+  call, applied immediately (WIZ-8), and remembered for future
+  transactions from the same merchant for this user (WIZ-9) — see
+  `app/services/categorization.py`.
 
 ## Tests
 

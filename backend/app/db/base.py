@@ -7,4 +7,13 @@ class Base(DeclarativeBase):
 
 # Imported so Base.metadata is complete for Alembic autogenerate and
 # for create_all in tests — not used directly.
-from app.models import account, plaid_item, transaction, user  # noqa: E402,F401
+from app.models import (  # noqa: E402,F401
+    account,
+    anomaly_flag,
+    category,
+    merchant_category_rule,
+    plaid_item,
+    recurring_series,
+    transaction,
+    user,
+)

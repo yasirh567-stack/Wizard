@@ -13,6 +13,7 @@ from sqlalchemy.pool import StaticPool  # noqa: E402
 from app.db.base import Base  # noqa: E402
 from app.db.session import get_db  # noqa: E402
 from app.main import app  # noqa: E402
+from app.services.category_taxonomy import seed_categories_and_rules  # noqa: E402
 
 # In-memory SQLite: fast, zero external dependencies. The GUID type
 # (app/db/types.py) is what makes the same models work here and on the real
@@ -36,6 +37,7 @@ def db_session():
     Base.metadata.create_all(engine)
     testing_session_local = sessionmaker(autocommit=False, autoflush=False, bind=engine)
     session = testing_session_local()
+    seed_categories_and_rules(session)
     try:
         yield session
     finally:

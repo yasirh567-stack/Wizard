@@ -6,6 +6,7 @@ consequences of how this endpoint's cursor and added/modified/removed
 payload are handled, not separate logic bolted on afterward.
 """
 
+import uuid
 from typing import Any
 
 from plaid.api import plaid_api
@@ -17,6 +18,7 @@ from app.core.encryption import decrypt
 from app.models.account import Account
 from app.models.plaid_item import PlaidItem
 from app.models.transaction import Transaction
+from app.services.categorization import categorize_transaction
 
 
 def sync_transactions(db: Session, client: plaid_api.PlaidApi, item: PlaidItem) -> dict[str, int]:
@@ -39,11 +41,11 @@ def sync_transactions(db: Session, client: plaid_api.PlaidApi, item: PlaidItem) 
         response = client.transactions_sync(TransactionsSyncRequest(**request_kwargs))
 
         for txn in response.added:
-            _upsert_transaction(db, accounts_by_plaid_id, txn)
+            _upsert_transaction(db, accounts_by_plaid_id, txn, item.user_id)
             added_count += 1
 
         for txn in response.modified:
-            _upsert_transaction(db, accounts_by_plaid_id, txn)
+            _upsert_transaction(db, accounts_by_plaid_id, txn, item.user_id)
             modified_count += 1
 
         # Flush before processing removals: a pending transaction posting
@@ -72,7 +74,9 @@ def sync_transactions(db: Session, client: plaid_api.PlaidApi, item: PlaidItem) 
     return {"added": added_count, "modified": modified_count, "removed": removed_count}
 
 
-def _upsert_transaction(db: Session, accounts_by_plaid_id: dict[str, Account], txn: Any) -> None:
+def _upsert_transaction(
+    db: Session, accounts_by_plaid_id: dict[str, Account], txn: Any, user_id: uuid.UUID
+) -> None:
     account = accounts_by_plaid_id.get(txn.account_id)
     if account is None:
         # Transaction belongs to an account this item wasn't connected for.
@@ -107,4 +111,5 @@ def _upsert_transaction(db: Session, accounts_by_plaid_id: dict[str, Account], t
     existing.category = category
     existing.pending = txn.pending
 
+    categorize_transaction(db, existing, user_id)
     db.add(existing)

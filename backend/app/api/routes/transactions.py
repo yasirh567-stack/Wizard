@@ -7,10 +7,13 @@ from sqlalchemy.orm import Session
 from app.api.deps import get_current_user
 from app.db.session import get_db
 from app.models.account import Account
+from app.models.category import Category
 from app.models.transaction import Transaction
 from app.models.user import User
+from app.schemas.category import CategoryCorrection
 from app.schemas.csv_upload import CsvUploadResponse
 from app.schemas.transaction import TransactionRead
+from app.services.categorization import correct_category
 from app.services.csv_import import CsvFormatError, import_csv
 
 router = APIRouter(prefix="/transactions", tags=["transactions"])
@@ -31,6 +34,40 @@ def list_transactions(
     if account_id is not None:
         stmt = stmt.where(Account.id == account_id)
     return list(db.scalars(stmt).all())
+
+
+def _get_owned_transaction(db: Session, transaction_id: uuid.UUID, user_id: uuid.UUID) -> Transaction:
+    transaction = db.scalar(
+        select(Transaction)
+        .join(Account, Transaction.account_id == Account.id)
+        .where(Transaction.id == transaction_id, Account.user_id == user_id)
+    )
+    if transaction is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Transaction not found")
+    return transaction
+
+
+@router.patch("/{transaction_id}/category", response_model=TransactionRead)
+def correct_transaction_category(
+    transaction_id: uuid.UUID,
+    payload: CategoryCorrection,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+) -> Transaction:
+    """WIZ-8: a single call, applied immediately. WIZ-9: also remembered
+    for future transactions from the same merchant for this user — see
+    app/services/categorization.py.
+    """
+    transaction = _get_owned_transaction(db, transaction_id, current_user.id)
+
+    category = db.get(Category, payload.category_id)
+    if category is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Category not found")
+
+    correct_category(db, transaction, current_user.id, category)
+    db.commit()
+    db.refresh(transaction)
+    return transaction
 
 
 @router.post("/csv-upload", response_model=CsvUploadResponse, status_code=status.HTTP_201_CREATED)
